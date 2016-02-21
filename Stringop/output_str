@@ -1,0 +1,45 @@
+sudeep@work:~/Documents/Practicals/mil$ nasm -f elf64 stringop.asm
+sudeep@work:~/Documents/Practicals/mil$ ld -o stringop stringop.o
+sudeep@work:~/Documents/Practicals/mil$ ./stringop 
+Enter String : 
+abcde
+1.Length
+2.Reverse
+3.Check Palindrome
+Enter your choice
+1
+Length of String :  5
+sudeep@work:~/Documents/Practicals/mil$ 
+sudeep@work:~/Documents/Practicals/mil$ ./stringop 
+Enter String : 
+mnopqrs
+1.Length
+2.Reverse
+3.Check Palindrome
+Enter your choice
+2
+Reverse string :  
+srqponm
+sudeep@work:~/Documents/Practicals/mil$ 
+sudeep@work:~/Documents/Practicals/mil$ ./stringop 
+Enter String : 
+abcdcb
+1.Length
+2.Reverse
+3.Check Palindrome
+Enter your choice
+3
+String is not Palindrome
+sudeep@work:~/Documents/Practicals/mil$ 
+sudeep@work:~/Documents/Practicals/mil$ ./stringop 
+Enter String : 
+abcba
+1.Length
+2.Reverse
+3.Check Palindrome
+Enter your choice
+3
+String is Palindrome
+sudeep@work:~/Documents/Practicals/mil$ 
+sudeep@work:~/Documents/Practicals/mil$ 
+
