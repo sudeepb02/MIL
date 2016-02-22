@@ -54,20 +54,20 @@ global _start
 _start:
 menu:	fn 4,1,msg2,msg2len
 	
-	fn 3,0,str1,50
+	fn 3,0,str1,50		;Read the string
 		
 	fn 4,1,msg1,msg1len
 	fn 4,1,msg3,msg3len
 	
 	fn 3,0,choice,1		;Read choice
 	
-	cmp byte[choice],31h
+	cmp byte[choice],31h	;Check for entered choice
 	je strlen
 	cmp byte[choice],32h
 	je strrev
 	cmp byte[choice],33h
 	je strpal
-	fn 4,1,errmsg,errmsg
+	fn 4,1,errmsg,errmsg	;if invalid choice, display error msg
 	jmp exit	
 exit :
 	mov eax,1
@@ -77,14 +77,14 @@ exit :
 strlen : 
 	fn 4,1,lenmsg,lenmsglen
 
-	call strlenfn
+	call strlenfn		;call procedure
 	fn 4,1,temp,1
 	fn 4,1,nline,1
 		
 	jmp exit
 
 strrev :
-	call strrevfn
+	call strrevfn		;call procedure
 		
 	fn 4,1,revmsg,revmsglen
 	fn 4,1,str1rev,str1len
@@ -102,16 +102,16 @@ strlenfn :
 	push rcx
 	push rdx
 
-	mov ecx,0
-	mov esi,str1
-up:	cmp byte[esi],0Ah
+	mov ecx,0		;set counter
+	mov esi,str1		;set pointer
+up:	cmp byte[esi],0Ah	;test for new line
 	je nxt
-	inc cl
-	inc esi
-	jmp up
+	inc cl			;increment counter
+	inc esi			;incremetn pointer
+	jmp up			;check next byte
 
-nxt :	mov byte[str1len],cl
-	cmp cl,09
+nxt :	mov byte[str1len],cl	;store count
+	cmp cl,09		;convert to ascii
 	jbe add30
 	add cl,07
 add30:	add cl,30h
@@ -130,14 +130,14 @@ strrevfn :
 	push rcx
 	push rdx
 	
-	mov ecx,0
-	mov esi,str1
+	mov ecx,0		
+	mov esi,str1		;set pointer
 	mov edi,str1rev
-	mov cl,byte[str1len]
-	sub cl,1
+	mov cl,byte[str1len]	;initialize counter
+	sub cl,1		;adjust pointer
 	add esi,ecx
 	add cl,1
-loop1:	mov al,byte[esi]
+loop1:	mov al,byte[esi]	;copy byte to destination
 	mov byte[edi],al
 	inc edi
 	dec esi
@@ -157,12 +157,12 @@ strpalfn :
 	push rcx
 	push rdx
 
-	call strlenfn
-	mov cl,byte[str1len]
-	call strrevfn
-	mov esi,str1
-	mov edi,str1rev
-l1:	mov al,byte[esi]
+	call strlenfn		;call strlenfn to calculate length
+	mov cl,byte[str1len]	;store length
+	call strrevfn		;call reverse function
+	mov esi,str1		;set pointer
+	mov edi,str1rev		
+l1:	mov al,byte[esi]	;check byte with reverse
 	cmp al,byte[edi]
 	jne l2
 	inc esi
@@ -170,7 +170,7 @@ l1:	mov al,byte[esi]
 	dec cl
 	jnz l1
 
-	fn 4,1,palmsg,palmsglen
+	fn 4,1,palmsg,palmsglen	
 	jmp l3
 l2:
 	fn 4,1,npal,npallen

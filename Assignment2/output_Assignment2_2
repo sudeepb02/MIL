@@ -1,0 +1,8 @@
+sudeep@work:~$ nasm -f elf64 Assignment2_2.asm 
+sudeep@work:~$ ld -o Assignment2_2 Assignment2_2.o
+sudeep@work:~$ ./Assignment2_2
+Enter a Hex number : 
+7B
+Equivalent BCD number : 123
+sudeep@work:~$ 
+

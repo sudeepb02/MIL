@@ -1,0 +1,10 @@
+shri@work:~$ clear
+
+shri@work:~$ nasm -f elf64 Assignment2.asm
+shri@work:~$ ld -o Assignment2 Assignment2.o
+shri@work:~$ ./Assignment2 
+Enter a BCD number : 
+123
+Equivalent hexadecimal number : 0000007B
+shri@work:~$ 
+
