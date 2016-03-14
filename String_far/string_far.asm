@@ -15,16 +15,25 @@
 	pop rax
 %endmacro
 
-section .data
+extern str1,str2,str3,str1len,str2len
+global concat,substring
 
+concat :
+	mov esi,str1	;set pointer to source
+	mov edi,str3	;set pointer to destination
+	mov cl,byte[str1len] 	;set counter
 
-section .text
-global_main
-_main:
+	cld		;clear direction flag
+	rep movsb	;copy string
+
+	mov esi,str2	;pointer to source 
+	mov cl,byte[str2len]
 	
-exit:
-	mov eax,1
-	mov ebx,0
-	int 80h
+	cld
+	rep movsb 
 
+	ret
+
+substring :
+	ret
 
