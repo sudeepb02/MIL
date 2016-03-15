@@ -1,0 +1,34 @@
+sudeep@work:~/Documents/Practicals/mil/blocktx$ nasm -f elf64 blocktx.asm
+sudeep@work:~/Documents/Practicals/mil/blocktx$ ld -o blocktx blocktx.o
+sudeep@work:~/Documents/Practicals/mil/blocktx$ ./blocktx 
+String :  000001234500000
+1.Non-overlapping
+2.Overlapping with positive offset
+3.Overlapping with negative offset
+4.Exit
+1
+000001234512345
+String :  000001234512345
+1.Non-overlapping
+2.Overlapping with positive offset
+3.Overlapping with negative offset
+4.Exit
+2
+Enter offset :  3
+000001231234545
+String :  000001231234545
+1.Non-overlapping
+2.Overlapping with positive offset
+3.Overlapping with negative offset
+4.Exit
+3
+Enter offset :  4
+012312231234545
+String :  012312231234545
+1.Non-overlapping
+2.Overlapping with positive offset
+3.Overlapping with negative offset
+4.Exit
+4
+sudeep@work:~/Documents/Practicals/mil/blocktx$ 
+
