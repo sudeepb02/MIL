@@ -58,17 +58,27 @@ sub30:	sub bl,30h
 	cmp byte[esi],0Ah
 	jne conv1
 
+
 l1:	mov dword[num1],eax
 	mov eax,0
 	mov esi,no2
 
-	mov bl,byte[esi]
+conv2:	mov bl,byte[esi]
 	cmp bl,0Ah
 	je lmul
+	cmp bl,39h
+	jbe sub2
+	sub bl,07h
+sub2:	sub bl,30h
 
+	rol eax,4
+	add al,bl
+	inc esi
+	cmp byte[esi],0Ah
+	jne conv2
 
-
-lmul:	call multiply
+lmul:	mov dword[num2],eax
+	call multiply
 	fn 4,1,nline,1
 
 	call display
