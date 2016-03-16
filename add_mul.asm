@@ -19,6 +19,12 @@ section .data
 msg1 db "Enter the two numbers : ",20h
 msg1len equ $-msg1
 
+msg2 db "1. Using Addition",10,"2.Using Shift and Add",10,"3.Exit",10
+msg2len equ $-msg2
+
+msg3 db "Multiplication of two numbers ",10
+msg3len equ $-msg3
+
 nline db 10
 
 section .bss
@@ -29,11 +35,14 @@ num1 resd 1
 num2 resd 1
 rdec resd 1 
 temp resd 1
-
+choice resb 2
 
 section .text
 global _start
 _start:
+	fn 4,1,msg3,msg3len
+	fn 4,1,nline,1
+
 	fn 4,1,msg1,msg1len
 
 	fn 3,0,no1,8	;Read number 1
@@ -65,7 +74,7 @@ l1:	mov dword[num1],eax
 
 conv2:	mov bl,byte[esi]
 	cmp bl,0Ah
-	je lmul
+	je menu
 	cmp bl,39h
 	jbe sub2
 	sub bl,07h
@@ -77,22 +86,65 @@ sub2:	sub bl,30h
 	cmp byte[esi],0Ah
 	jne conv2
 
-lmul:	mov dword[num2],eax
-	call multiply
+menu :
+	mov dword[num2],eax
+	fn 4,1,msg2,msg2len
+	
+	fn 3,0,choice,2
+	
+	cmp byte[choice],31h
+	je addmul
+	cmp byte[choice],32h
+	je shiftadd
+	cmp byte[choice],33h
+	je exit
+	jmp _start
+
+addmul:
+	call madd
 	fn 4,1,nline,1
 
 	call display
 	fn 4,1,result,8
 
 	fn 4,1,nline,1
-	jmp exit
+	jmp _start
 
+shiftadd :
+	call mshift 
+	fn 4,1,nline,1
+
+	call display
+	fn 4,1,result,8
+
+	fn 4,1,nline,1
+	jmp _start
 exit :
 	mov eax,1
 	mov ebx,0
 	int 80h
 
-multiply:
+mshift :
+	mov eax,[num1]
+	mov ebx,[num2]
+
+	mov ecx,20h
+	mov edx,00
+	
+ls2:	shl edx,1
+	shl ebx,1
+	jnc ls1
+	add edx,eax
+ls1:
+	dec ecx
+	jnz ls2
+
+	mov [rdec],edx
+	ret
+
+
+
+madd:
 	mov eax,dword[num1]
 	mov ecx,dword[num2]
 

@@ -21,12 +21,14 @@ global concat,substring
 concat :
 	mov esi,str1	;set pointer to source
 	mov edi,str3	;set pointer to destination
+	mov ecx,0
 	mov cl,byte[str1len] 	;set counter
 
 	cld		;clear direction flag
 	rep movsb	;copy string
 
 	mov esi,str2	;pointer to source 
+	mov ecx,0
 	mov cl,byte[str2len]
 	
 	cld

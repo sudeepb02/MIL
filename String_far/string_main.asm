@@ -34,16 +34,16 @@ msg4len equ $-msg4
 errmsg db "Please enter correct choice ",10
 errmsglen equ $-errmsg
 
-nline db "",10		;For new line
+nline db 10	;For new line
 
 section .bss
 str1 resb 16
 str2 resb 16
 str3 resb 32
 
-str1len resb 1
-str2len resb 1
-str3len resb 1
+str1len resb 2
+str2len resb 2
+str3len resb 2
 choice resb 2
 
 
@@ -67,8 +67,9 @@ l_concat:
 	mov eax,3
 	mov ebx,0
 	mov ecx,str1
-	mov edx,40
+	mov edx,16
 	int 80h
+	dec al
 	mov byte[str1len],al
 
 	fn 4,1,msg4,msg4len
@@ -76,18 +77,20 @@ l_concat:
 	mov eax,3
 	mov ebx,0
 	mov ecx,str2
-	mov edx,20
+	mov edx,16
 	int 80h
+	dec al
 	mov byte[str2len],al
-
-	call concat
-
+	
 	mov bl,byte[str1len]
 	mov cl,byte[str2len]
 	add bl,cl
 	mov byte[str3len],bl
+	
+	call concat
 
 	fn 4,1,str3,str3len
+	fn 4,1,nline,1
 	jmp exit
 
 l_substr:
@@ -96,7 +99,7 @@ l_substr:
 	mov eax,3
 	mov ebx,0
 	mov ecx,str1
-	mov edx,40
+	mov edx,16
 	int 80h
 	mov byte[str1len],al
 	
@@ -105,7 +108,7 @@ l_substr:
 	mov eax,3
 	mov ebx,0
 	mov ecx,str2
-	mov edx,20
+	mov edx,16
 	int 80h
 	mov byte[str2len],al
 
